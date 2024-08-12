@@ -17,7 +17,8 @@ public class ProductRepositoryImpl implements ProductRepository {
     JdbcTemplate jdbcTemplate;
     @Autowired
     ObjectMapper objectMapper;
-
+    @Autowired
+    FunctionUtil functionUtil;
 
     @Override
     public Integer createProduct(Product product) {
@@ -36,11 +37,11 @@ public class ProductRepositoryImpl implements ProductRepository {
                 TableNamesUtil.PRODUCT_TABLE_NAME +
                 " WHERE id = ?";
         jdbcTemplate.update(sql,id);
-        if (jdbcTemplate.update(sql,id) == 1) {
-            System.out.println("product " + id + " was deleted");
-        }else{
-            System.out.println("no product was deleted");
-        }
+//        if (jdbcTemplate.update(sql,id) == 1) {
+//            System.out.println("product " + id + " was deleted");
+//        }else{
+//            System.out.println("no product was deleted");
+//        }
     }
 
     @Override
@@ -52,22 +53,22 @@ public class ProductRepositoryImpl implements ProductRepository {
             Product product = jdbcTemplate.queryForObject(sql, new ProductMapper(),productName);
             return product;
         }catch (EmptyResultDataAccessException e) {
-            System.out.println("there is no product named " + productName);
             return null;
         }
     }
 
     @Override
-    public void updateProductByName(String productName, Product product) {
+    public String updateProductByName(String productName, Product product) {
         String sql = "UPDATE " +
                 TableNamesUtil.PRODUCT_TABLE_NAME +
-                " SET" + FunctionUtil.StringProductNotNullVar(product) +
-                "WHERE productName = ?";
+                functionUtil.generateSqlSetString(product) +
+                " WHERE productName = ?";
+        System.out.println(sql);
         Integer update = jdbcTemplate.update(sql,productName);
         if (update == 1){
-            System.out.println("product " + productName + " was updated");
+            return ("product " + productName + " was updated");
         }else {
-            System.out.println("no such product");
+            return ("There isn't product named " + productName);
         }
     }
 
@@ -75,7 +76,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     public Product getProductById(Integer id) throws JsonProcessingException {
         String sql = "SELECT * FROM " +
                 TableNamesUtil.PRODUCT_TABLE_NAME +
-                "WHERE id = ?";
+                " WHERE id = ?";
         try {
             Product product = jdbcTemplate.queryForObject(sql, new ProductMapper(), id);
             return product;

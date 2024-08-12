@@ -7,6 +7,6 @@ public interface ProductRepository {
     public Integer createProduct(Product product);
     public void deleteProductById(Integer id);
     public Product getProductByName(String productName);
-    public void updateProductByName(String productName, Product product);
+    public String updateProductByName(String productName, Product product);
     public Product getProductById (Integer id) throws JsonProcessingException;
 }

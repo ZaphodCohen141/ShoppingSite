@@ -21,11 +21,12 @@ public class ProductController {
         productService.deleteProductById(id);
     }
 
-    @PostMapping(value = "/public/getProductByName")
-    public Product getProductByName(String productName) {
-        return null;
+    @GetMapping(value = "/public/getProductByName")
+    public Product getProductByName(@RequestParam String productName) {
+        return  productService.getProductByName(productName);
     }
     @PostMapping(value = "private/updateProductByName")
-    public void updateProductByName(String productName, Product product) {
+    public void updateProductByName(@RequestParam String productName, @RequestBody Product product) {
+        productService.updateProductByName(productName,product);
     }
 }

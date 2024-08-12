@@ -4,6 +4,7 @@ import com.ShoppingSite.model.User.CustomUser;
 import com.ShoppingSite.model.User.CustomUserRequest;
 import com.ShoppingSite.repository.userReository.UserRepository;
 import com.ShoppingSite.service.User.UserService;
+import com.ShoppingSite.utils.FunctionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    FunctionUtil functionUtil;
     @Override
     public void createUser(CustomUserRequest customUserRequest) throws Exception {
         CustomUser existingCustomUser = userRepository.findUserByUsername(customUserRequest.getUsername());

@@ -21,7 +21,6 @@ public class ProductServiceImpl implements ProductService {
         if(existingProduct != null){
             throw new Exception("Product " + productRequest.getProductName() + " already exist");
         }else {
-            productRepository.createProduct(productRequest.toProduct());
             return productRepository.createProduct(productRequest.toProduct());
         }
     }
@@ -31,23 +30,39 @@ public class ProductServiceImpl implements ProductService {
 //        checks if product exists.
 //        if exists - delete the product (!! need to be deleted also from userShoppingCart !!)
         Product product = productRepository.getProductById(id);
-        if (product == null){
-            System.out.println("there is no product with id " + id);
-        }else {
+        if (product != null){
             productRepository.deleteProductById(id);
 //            !! ADD LATER - DELETE PRODUCT FROM SHOPPING CART !!
             System.out.println("product was deleted");
+
+        }else {
+            System.out.println("there is no product with id " + id);
         }
     }
 
     @Override
     public Product getProductByName(String productName) {
-        return null;
+        //        checks if product exists.
+//        if exists - get the product
+        Product product = productRepository.getProductByName(productName);
+        if (product != null){
+            return productRepository.getProductByName(productName);
+        }else {
+            System.out.println("there isn't product named " + productName);
+            return null;
+        }
     }
 
     @Override
-    public void updateProductByName(String productName, Product product) {
-
+    public String updateProductByName(String productName, Product product) {
+        //        if exists - update the product. if not - sout to create new product
+        Product productFromDb = productRepository.getProductByName(productName);
+        if (productFromDb != null){
+            return productRepository.updateProductByName(productName,product);
+        }else {
+            System.out.println("there isn't product named " + productName);
+            return null;
+        }
     }
 
 }

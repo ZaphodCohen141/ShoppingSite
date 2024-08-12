@@ -19,7 +19,7 @@ CREATE TABLE products(
     id INT NOT NULL AUTO_INCREMENT,
     productName varchar(255) NOT NULL DEFAULT '',
     quantity INT NOT NULL,
-    price INT NOT NULL,
+    price DOUBLE NOT NULL,
     PRIMARY KEY(id)
 );
 
@@ -27,4 +27,4 @@ INSERT INTO users (username, firstName, lastName, email, phone, address, passwor
 VALUES ('zapbeeb','Zaphod','Beeblebrox','za@b.il','09987','Somewhere forSure','',1,'','');
 
 INSERT INTO products (productName, quantity, price)
-VALUES ('TableTop', 12, 300),('Velociraptor',50,200)
+VALUES ('TableTop', 12, 300.0),('Velociraptor',50,200.0)

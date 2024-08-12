@@ -8,5 +8,5 @@ public interface ProductService {
     public Integer createProduct(ProductRequest productRequest) throws Exception;
     public void deleteProductById(Integer id) throws JsonProcessingException;
     public Product getProductByName(String productName);
-    public  void updateProductByName(String productName, Product product);
+    public  String updateProductByName(String productName, Product product);
 }
