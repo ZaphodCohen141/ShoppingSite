@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users(
-    id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
     username varchar(255) NOT NULL DEFAULT '',
     firstName varchar(255) NOT NULL DEFAULT '',
     lastName varchar(255) NOT NULL DEFAULT '',
@@ -15,5 +15,16 @@ CREATE TABLE users(
     PRIMARY KEY(id)
 );
 
-INSERT INTO users (id, username, firstName, lastName, email, phone, address, password, active, roles , permissions)
-VALUES (1,'zapbeeb','Zaphod','Beeblebrox','za@b.il','09987','Somewhere forSure','',1,'','')
+CREATE TABLE products(
+    id INT NOT NULL AUTO_INCREMENT,
+    productName varchar(255) NOT NULL DEFAULT '',
+    quantity INT NOT NULL,
+    price INT NOT NULL,
+    PRIMARY KEY(id)
+);
+
+INSERT INTO users (username, firstName, lastName, email, phone, address, password, active, roles , permissions)
+VALUES ('zapbeeb','Zaphod','Beeblebrox','za@b.il','09987','Somewhere forSure','',1,'','');
+
+INSERT INTO products (productName, quantity, price)
+VALUES ('TableTop', 12, 300),('Velociraptor',50,200)

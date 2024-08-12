@@ -1,6 +1,6 @@
-package com.ShoppingSite.model;
+package com.ShoppingSite.model.User;
 
-import com.ShoppingSite.model.CustomUser;
+import com.ShoppingSite.model.User.CustomUser;
 
 public class CustomUserRequest {
     private Long id;

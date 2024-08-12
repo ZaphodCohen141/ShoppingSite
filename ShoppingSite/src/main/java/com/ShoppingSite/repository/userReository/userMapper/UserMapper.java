@@ -1,6 +1,6 @@
-package com.ShoppingSite.repository.mapper;
+package com.ShoppingSite.repository.userReository.userMapper;
 
-import com.ShoppingSite.model.CustomUser;
+import com.ShoppingSite.model.User.CustomUser;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

@@ -1,13 +1,14 @@
-package com.ShoppingSite.service;
+package com.ShoppingSite.service.User;
 
-import com.ShoppingSite.model.CustomUser;
-import com.ShoppingSite.model.CustomUserRequest;
-import com.ShoppingSite.repository.UserRepository;
+import com.ShoppingSite.model.User.CustomUser;
+import com.ShoppingSite.model.User.CustomUserRequest;
+import com.ShoppingSite.repository.userReository.UserRepository;
+import com.ShoppingSite.service.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
     @Override

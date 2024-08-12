@@ -1,4 +1,4 @@
-package com.ShoppingSite.model;
+package com.ShoppingSite.model.User;
 
 public class CustomUser {
     private Long id;
