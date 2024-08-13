@@ -1,6 +1,6 @@
 package com.ShoppingSite.repository.productRepository;
 
-import com.ShoppingSite.model.Product.Product;
+import com.ShoppingSite.model.product.Product;
 import com.ShoppingSite.repository.productRepository.productMapper.ProductMapper;
 import com.ShoppingSite.utils.FunctionUtil;
 import com.ShoppingSite.utils.TableNamesUtil;

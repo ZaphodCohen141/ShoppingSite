@@ -1,20 +1,32 @@
-package com.ShoppingSite.model.User;
+package com.ShoppingSite.model.user;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CustomUser {
-    private Long id;
+    @JsonProperty("id")
+    private Integer id;
+    @JsonProperty("username")
     private String username;
+    @JsonProperty("firstName")
     private String firstName;
+    @JsonProperty("lastName")
     private String lastName;
+    @JsonProperty("email")
     private String email;
+    @JsonProperty("phone")
     private String phone;
+    @JsonProperty("address")
     private String address;
+    @JsonProperty("password")
     private String password;
+    @JsonProperty("active")
     private int active;
+    @JsonProperty("roles")
     private String roles = "";
-
+    @JsonProperty("permissions")
     private String permissions = "";
 
-    public CustomUser(Long id, String username, String firstName, String lastName, String email, String phone, String address, String password, int active, String roles, String permissions) {
+    public CustomUser(Integer id, String username, String firstName, String lastName, String email, String phone, String address, String password, int active, String roles, String permissions) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
@@ -28,11 +40,27 @@ public class CustomUser {
         this.permissions = permissions;
     }
 
-    public Long getId() {
+    public CustomUser() {
+    }
+
+    public CustomUser(String username, String firstName, String lastName, String email, String phone, String address, String password, int active, String roles, String permissions) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.password = password;
+        this.active = active;
+        this.roles = roles;
+        this.permissions = permissions;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -116,4 +144,20 @@ public class CustomUser {
         this.permissions = permissions;
     }
 
+    @Override
+    public String toString() {
+        return "CustomUser{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", password='" + password + '\'' +
+                ", active=" + active +
+                ", roles='" + roles + '\'' +
+                ", permissions='" + permissions + '\'' +
+                '}';
+    }
 }

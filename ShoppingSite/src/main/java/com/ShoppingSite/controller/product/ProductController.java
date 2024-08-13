@@ -1,8 +1,8 @@
-package com.ShoppingSite.controller.Product;
+package com.ShoppingSite.controller.product;
 
-import com.ShoppingSite.model.Product.Product;
-import com.ShoppingSite.model.Product.ProductRequest;
-import com.ShoppingSite.service.Product.ProductService;
+import com.ShoppingSite.model.product.Product;
+import com.ShoppingSite.model.product.ProductRequest;
+import com.ShoppingSite.service.product.ProductService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

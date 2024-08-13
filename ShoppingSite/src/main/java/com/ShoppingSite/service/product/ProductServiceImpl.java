@@ -1,7 +1,7 @@
-package com.ShoppingSite.service.Product;
+package com.ShoppingSite.service.product;
 
-import com.ShoppingSite.model.Product.Product;
-import com.ShoppingSite.model.Product.ProductRequest;
+import com.ShoppingSite.model.product.Product;
+import com.ShoppingSite.model.product.ProductRequest;
 import com.ShoppingSite.repository.productRepository.ProductRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

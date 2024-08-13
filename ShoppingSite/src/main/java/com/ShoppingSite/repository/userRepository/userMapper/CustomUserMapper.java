@@ -1,18 +1,18 @@
-package com.ShoppingSite.repository.userReository.userMapper;
+package com.ShoppingSite.repository.userRepository.userMapper;
 
-import com.ShoppingSite.model.User.CustomUser;
+import com.ShoppingSite.model.user.CustomUser;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserMapper implements RowMapper<CustomUser> {
+public class CustomUserMapper implements RowMapper<CustomUser> {
 
     @Override
     public CustomUser mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new CustomUser(
-                rs.getLong("id"),
-                rs.getString("userName"),
+                rs.getInt("id"),
+                rs.getString("username"),
                 rs.getString("firstName"),
                 rs.getString("lastName"),
                 rs.getString("email"),

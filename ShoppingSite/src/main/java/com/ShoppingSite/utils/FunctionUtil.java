@@ -1,11 +1,8 @@
 package com.ShoppingSite.utils;
 
-import com.ShoppingSite.model.Product.Product;
-import com.ShoppingSite.model.User.CustomUser;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 
 @Component
 public class FunctionUtil {

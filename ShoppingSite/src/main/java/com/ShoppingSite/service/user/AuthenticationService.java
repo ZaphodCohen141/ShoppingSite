@@ -1,9 +1,7 @@
-package com.ShoppingSite.service.User;
+package com.ShoppingSite.service.user;
 
 import com.ShoppingSite.security.model.AuthenticationRequest;
 import com.ShoppingSite.security.model.AuthenticationResponse;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.AuthenticationManager;
 
 public interface AuthenticationService {
 

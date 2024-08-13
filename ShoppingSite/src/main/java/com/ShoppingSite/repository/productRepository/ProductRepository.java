@@ -1,6 +1,6 @@
 package com.ShoppingSite.repository.productRepository;
 
-import com.ShoppingSite.model.Product.Product;
+import com.ShoppingSite.model.product.Product;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface ProductRepository {

@@ -1,6 +1,6 @@
 package com.ShoppingSite.repository.productRepository.productMapper;
 
-import com.ShoppingSite.model.Product.Product;
+import com.ShoppingSite.model.product.Product;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
