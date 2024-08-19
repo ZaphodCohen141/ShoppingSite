@@ -21,6 +21,13 @@ public class ProductRequest {
                 this.price
         );
     }
+    public Product productStatus(){
+        return new Product(
+                this.productName,
+                this.quantity,
+                this.price
+        );
+    }
 
     public ProductRequest() {
     }

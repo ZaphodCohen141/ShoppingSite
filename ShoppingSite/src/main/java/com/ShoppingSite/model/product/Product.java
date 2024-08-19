@@ -11,6 +11,8 @@ public class Product {
     private Integer quantity;
     @JsonProperty("price")
     private Double price;
+    @JsonProperty("status")
+    private Integer status;
 
     public Product() {
     }
@@ -26,6 +28,20 @@ public class Product {
         this.productName = productName;
         this.quantity = quantity;
         this.price = price;
+    }
+
+    public Product(Integer id, Integer quantity, Integer status) {
+        this.id = id;
+        this.quantity = quantity;
+        this.status = status;
+    }
+
+    public Product(Integer id, String productName, Integer quantity, Double price, Integer status) {
+        this.id = id;
+        this.productName = productName;
+        this.quantity = quantity;
+        this.price = price;
+        this.status = status;
     }
 
     public Integer getId() {
@@ -58,6 +74,14 @@ public class Product {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
 

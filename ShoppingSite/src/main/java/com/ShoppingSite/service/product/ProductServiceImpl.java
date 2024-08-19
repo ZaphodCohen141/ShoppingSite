@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
@@ -26,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteProductById(Integer id) throws JsonProcessingException {
+    public void deleteProductById(Integer id) throws Exception {
 //        checks if product exists.
 //        if exists - delete the product (!! need to be deleted also from userShoppingCart !!)
         Product product = productRepository.getProductById(id);
@@ -63,6 +65,11 @@ public class ProductServiceImpl implements ProductService {
             System.out.println("there isn't product named " + productName);
             return null;
         }
+    }
+
+    @Override
+    public List<Product> findProducts(String product) {
+        return productRepository.findProducts(product);
     }
 
 }

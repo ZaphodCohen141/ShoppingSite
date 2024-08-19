@@ -11,6 +11,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class ProductRepositoryImpl implements ProductRepository {
     @Autowired
@@ -84,6 +86,9 @@ public class ProductRepositoryImpl implements ProductRepository {
             return null;
         }
     }
-
-
+    public List<Product> findProducts (String product) {
+        String sql = "SELECT * FROM " + TableNamesUtil.PRODUCT_TABLE_NAME + " WHERE LOWER(productName) LIKE LOWER(?)";
+        String searchPattern = "%" + product.toLowerCase() + "%";
+        return jdbcTemplate.query(sql, new Object[]{searchPattern}, new ProductMapper());
+    }
 }

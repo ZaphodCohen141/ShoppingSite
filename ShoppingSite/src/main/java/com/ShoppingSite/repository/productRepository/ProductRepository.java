@@ -1,12 +1,14 @@
 package com.ShoppingSite.repository.productRepository;
 
 import com.ShoppingSite.model.product.Product;
-import com.fasterxml.jackson.core.JsonProcessingException;
+
+import java.util.List;
 
 public interface ProductRepository {
     public Integer createProduct(Product product);
     public void deleteProductById(Integer id);
     public Product getProductByName(String productName);
     public String updateProductByName(String productName, Product product);
-    public Product getProductById (Integer id) throws JsonProcessingException;
+    public Product getProductById (Integer id) throws Exception;
+    public List<Product> findProducts (String product);
 }

@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users, products, shopping_cart, cart_products;
 
 CREATE TABLE users(
     id INT NOT NULL AUTO_INCREMENT,
@@ -20,7 +20,29 @@ CREATE TABLE products(
     productName varchar(255) NOT NULL DEFAULT '',
     quantity INT NOT NULL,
     price DOUBLE NOT NULL,
+    status INT NOT NULL DEFAULT '1',
     PRIMARY KEY(id)
+);
+
+-- Create the shopping_cart table
+CREATE TABLE shopping_cart (
+    cart_id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(255) NOT NULL,
+    user_id INT NOT NULL,
+    amount DOUBLE NOT NULL,
+    state INT NOT NULL
+);
+
+-- cart_products table links shopping carts with products
+CREATE TABLE cart_products (
+    cart_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    price DOUBLE NOT NULL,
+    status INT NOT NULL,
+    PRIMARY KEY (cart_id, product_id),
+    FOREIGN KEY (cart_id) REFERENCES shopping_cart(cart_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
 
 INSERT INTO users (username, firstName, lastName, email, phone, address, password, active, roles , permissions)

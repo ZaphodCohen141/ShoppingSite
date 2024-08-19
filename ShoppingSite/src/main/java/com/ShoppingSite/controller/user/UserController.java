@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private UserService userService;
-    @PostMapping("/createUser")
+    @PostMapping("/create")
     public Integer createUser(@RequestBody CustomUserRequest customUserRequest) throws Exception {
         return userService.createUser(customUserRequest);
     }
@@ -30,7 +30,7 @@ public class UserController {
     public CustomUser getUserByUsername(@RequestParam String username) {
         return userService.getUserByUsername(username);
     }
-    @DeleteMapping("/deleteUser")
+    @DeleteMapping("/delete")
     public void deleteUserByUsername(@RequestParam String username) {
         userService.deleteUserByUsername(username);
     }

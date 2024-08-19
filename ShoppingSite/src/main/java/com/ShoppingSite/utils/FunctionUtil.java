@@ -1,11 +1,18 @@
 package com.ShoppingSite.utils;
 
+import com.ShoppingSite.model.user.CustomUser;
+import com.ShoppingSite.repository.userRepository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 
 @Component
 public class FunctionUtil {
+    @Autowired
+    @Lazy
+    UserRepository userRepository;
     public String generateSqlSetString(Object ob) {
         StringBuilder sb = new StringBuilder();
         Field[] fields = ob.getClass().getDeclaredFields();
@@ -35,4 +42,12 @@ public class FunctionUtil {
 
         return sb.toString();
     }
+
+    // Method to check if a user exists
+    public boolean isUserExists(String username) {
+        CustomUser user = userRepository.getUserByUsername(username);
+        return user != null;
+    }
+
+
 }
