@@ -11,4 +11,5 @@ public interface ProductRepository {
     public String updateProductByName(String productName, Product product);
     public Product getProductById (Integer id) throws Exception;
     public List<Product> findProducts (String product);
+    public Integer updateProductQuantity(Product product);
 }

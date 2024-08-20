@@ -14,14 +14,14 @@ public class ShoppingCart {
     private Integer userId;
     private List<Product> productsList;
     @JsonProperty("amount")
-    private Integer amount;
+    private Double amount;
     @JsonProperty("state")
     private Integer state;
 
     public ShoppingCart() {
     }
 
-    public ShoppingCart(Integer cartId, String username, Integer userId, List<Product> productsList, Integer amount, Integer state) {
+    public ShoppingCart(Integer cartId, String username, Integer userId, List<Product> productsList, Double amount, Integer state) {
         this.cartId = cartId;
         this.username = username;
         this.userId = userId;
@@ -62,11 +62,11 @@ public class ShoppingCart {
         this.productsList = productsList;
     }
 
-    public Integer getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
@@ -76,5 +76,17 @@ public class ShoppingCart {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        return "ShoppingCart{" +
+                "cartId=" + cartId +
+                ", username='" + username + '\'' +
+                ", userId=" + userId +
+                ", productsList=" + productsList +
+                ", amount=" + amount +
+                ", state=" + state +
+                '}';
     }
 }

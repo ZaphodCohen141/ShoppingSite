@@ -91,4 +91,11 @@ public class ProductRepositoryImpl implements ProductRepository {
         String searchPattern = "%" + product.toLowerCase() + "%";
         return jdbcTemplate.query(sql, new Object[]{searchPattern}, new ProductMapper());
     }
+
+    // Update product quantity
+    public Integer updateProductQuantity(Product product) {
+        String sql = "UPDATE " + TableNamesUtil.PRODUCT_TABLE_NAME +
+                " SET quantity = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, product.getQuantity(), product.getId());
+    }
 }

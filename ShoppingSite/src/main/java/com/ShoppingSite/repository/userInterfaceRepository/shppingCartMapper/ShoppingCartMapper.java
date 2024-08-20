@@ -17,7 +17,7 @@ public class ShoppingCartMapper implements RowMapper<ShoppingCart> {
         shoppingCart.setCartId(rs.getInt("cart_id"));
         shoppingCart.setUsername(rs.getString("username"));
         shoppingCart.setUserId(rs.getInt("user_id"));
-        shoppingCart.setAmount(rs.getInt("amount"));
+        shoppingCart.setAmount(rs.getDouble("amount"));
         shoppingCart.setState(rs.getInt("state"));
 
         // Assuming there's a method to extract products

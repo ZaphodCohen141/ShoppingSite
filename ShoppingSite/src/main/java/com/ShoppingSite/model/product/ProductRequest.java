@@ -21,6 +21,20 @@ public class ProductRequest {
                 this.price
         );
     }
+
+    public ProductRequest(String productName, Integer quantity, Double price) {
+        this.productName = productName;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    private Product convertToProduct() {
+        return new Product(
+        this.productName,
+        this.quantity
+        );
+    }
+
     public Product productStatus(){
         return new Product(
                 this.productName,

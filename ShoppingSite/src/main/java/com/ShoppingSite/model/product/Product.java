@@ -44,6 +44,9 @@ public class Product {
         this.status = status;
     }
 
+    public Product(String productName, Integer quantity) {
+    }
+
     public Integer getId() {
         return id;
     }
@@ -82,6 +85,17 @@ public class Product {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                ", status=" + status +
+                '}';
     }
 }
 

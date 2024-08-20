@@ -2,6 +2,7 @@ package com.ShoppingSite.repository.userInterfaceRepository;
 
 import com.ShoppingSite.model.product.Product;
 import com.ShoppingSite.model.userInterface.ShoppingCart;
+import com.ShoppingSite.repository.productRepository.ProductRepository;
 import com.ShoppingSite.repository.userInterfaceRepository.shppingCartMapper.ShoppingCartMapper;
 import com.ShoppingSite.utils.FunctionUtil;
 import com.ShoppingSite.utils.TableNamesUtil;
@@ -16,32 +17,34 @@ public class ShoppingCartRepositoryImpl implements ShoppingCartRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
+    ProductRepository productRepository;
+    @Autowired
     FunctionUtil functionUtil;
     @Override
     public Integer createShoppingCart(ShoppingCart shoppingCart) {
-        String sql = "INSERT INTO " + TableNamesUtil.SHOPPING_CART_TABLE_NAME + " (username, user_id, amount, state) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, shoppingCart.getUsername(), shoppingCart.getUserId(), shoppingCart.getAmount(), shoppingCart.getState());
-
-        // Retrieve the last inserted ID using MAX(cart_id)
+        String sql = "INSERT INTO " + TableNamesUtil.SHOPPING_CART_TABLE_NAME +
+                " (username, user_id, amount, state) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, shoppingCart.getUsername(), shoppingCart.getUserId(), shoppingCart.getAmount(),
+                shoppingCart.getState());
         String getIdSql = "SELECT MAX(cart_id) FROM " + TableNamesUtil.SHOPPING_CART_TABLE_NAME;
         Integer cartId = jdbcTemplate.queryForObject(getIdSql, Integer.class);
-
         // Insert products into cart_products
         if (cartId != null && shoppingCart.getProductsList() != null) {
             for (Product product : shoppingCart.getProductsList()) {
-                String productSql = "INSERT INTO " +
-                        TableNamesUtil.CART_PRODUCT_TABLE_NAME + " (cart_id, product_id, quantity, price, status) VALUES (?, ?, ?, ?, ?)";
-                jdbcTemplate.update(productSql, cartId, product.getId(), product.getQuantity(), product.getPrice(), product.getStatus());
+                String productSql = "INSERT INTO " + TableNamesUtil.CART_PRODUCT_TABLE_NAME +
+                        " (cart_id, product_id, quantity, price, status) VALUES (?, ?, ?, ?, ?)";
+                jdbcTemplate.update(productSql, cartId, product.getId(), product.getQuantity(), product.getPrice(),
+                        product.getStatus());
             }
         }
-        return 1; // Return a status or number of rows affected as needed
+        return 1;
     }
 
     @Override
     public Integer updateShoppingCart(ShoppingCart shoppingCart) {
         String sql = "UPDATE " + TableNamesUtil.SHOPPING_CART_TABLE_NAME +
                 " SET amount = ?, state = ? WHERE cart_id = ?";
-        Integer dbShoppingCart = jdbcTemplate.update(sql, shoppingCart.getAmount(), shoppingCart.getState(), shoppingCart.getCartId());
+        int rowsAffected = jdbcTemplate.update(sql, shoppingCart.getAmount(), shoppingCart.getState(), shoppingCart.getCartId());
 
         // Optionally update products in the cart_products table
         // First, delete existing products in the cart
@@ -53,11 +56,12 @@ public class ShoppingCartRepositoryImpl implements ShoppingCartRepository {
             for (Product product : shoppingCart.getProductsList()) {
                 String insertProductSql = "INSERT INTO " + TableNamesUtil.CART_PRODUCT_TABLE_NAME +
                         " (cart_id, product_id, quantity, price, status) VALUES (?, ?, ?, ?, ?)";
-                jdbcTemplate.update(insertProductSql, shoppingCart.getCartId(), product.getId(), product.getQuantity(), product.getPrice(), product.getStatus());
+                Product dbProduct = productRepository.getProductByName(product.getProductName());
+                jdbcTemplate.update(insertProductSql, shoppingCart.getCartId(), dbProduct.getId(), product.getQuantity(), dbProduct.getPrice(), dbProduct.getStatus());
             }
         }
 
-        return dbShoppingCart;
+        return rowsAffected;
     }
 
     @Override
