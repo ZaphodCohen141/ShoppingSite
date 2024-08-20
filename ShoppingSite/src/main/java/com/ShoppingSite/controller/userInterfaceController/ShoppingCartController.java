@@ -21,17 +21,14 @@ public class ShoppingCartController {
 
     @PostMapping("/create")
     public ResponseEntity<ShoppingCart> createCart(@RequestBody ShoppingCartRequest request) {
-        // convert List<ProductRequest> to List<Product>
         List<Product> productsList = request.getProductsList().stream()
                 .map(ProductRequest::toProduct)
                 .collect(Collectors.toList());
-
         // convert to ShoppingCart
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUserId(request.getUserId());
         shoppingCart.setUsername(request.getUsername());
         shoppingCart.setProductsList(productsList);
-
         ShoppingCart createdCart = shoppingCartService.createShoppingCart(shoppingCart);
         if (createdCart != null) {
             return ResponseEntity.ok(createdCart);
@@ -46,7 +43,7 @@ public class ShoppingCartController {
         if (shoppingCart != null) {
             return ResponseEntity.ok(shoppingCart);
         } else {
-            return ResponseEntity.notFound().build(); // Handle case where user does not exist
+            return ResponseEntity.notFound().build(); // if user does not exist
         }
     }
 
@@ -56,19 +53,17 @@ public class ShoppingCartController {
         if (deleted) {
             return ResponseEntity.ok().build();
         } else {
-            return ResponseEntity.notFound().build(); // Handle case where user does not exist
+            return ResponseEntity.notFound().build(); // if user does not exist
         }
     }
 
     @PutMapping("/update")
     public ResponseEntity<String> updateCart(@RequestBody ShoppingCartRequest request) {
-        // Convert List<ProductRequest> to List<Product> using toProduct() method
         List<Product> productsList = request.getProductsList().stream()
                 .map(ProductRequest::toProduct)
                 .collect(Collectors.toList());
-
         String result = shoppingCartService.updateShoppingCart(request.getUserId(), request.getUsername(), productsList);
-        if (result.equals("Shopping cart updated successfully.")) {
+        if (result.equals("Shopping cart updated successfully")) {
             return ResponseEntity.ok(result);
         } else {
             return ResponseEntity.badRequest().body(result);

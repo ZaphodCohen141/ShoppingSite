@@ -79,14 +79,15 @@ public class ShoppingCartRepositoryImpl implements ShoppingCartRepository {
 
     @Override
     public Integer deleteShoppingCartByUsername(String username) {
-        String deleteCartProductsSql = "DELETE FROM " +
-                TableNamesUtil.CART_PRODUCT_TABLE_NAME +
-                " WHERE cart_id = (SELECT cart_id FROM " +
+        String getCartIdSql = "SELECT cart_id FROM " +
                 TableNamesUtil.SHOPPING_CART_TABLE_NAME +
-                " WHERE username = ?)";
-        jdbcTemplate.update(deleteCartProductsSql, username);
-
-        String deleteCartSql = "DELETE FROM " + TableNamesUtil.SHOPPING_CART_TABLE_NAME + " WHERE username = ?";
-        return jdbcTemplate.update(deleteCartSql, username);
+                " WHERE username = ?";
+        Integer cartId = jdbcTemplate.queryForObject(getCartIdSql, new Object[]{username}, Integer.class);
+        if (cartId != null) {
+            String deleteCartSql = "DELETE FROM " + TableNamesUtil.SHOPPING_CART_TABLE_NAME + " WHERE cart_id = ?";
+            return jdbcTemplate.update(deleteCartSql, cartId);
+        } else {
+            return 0;
+        }
     }
 }

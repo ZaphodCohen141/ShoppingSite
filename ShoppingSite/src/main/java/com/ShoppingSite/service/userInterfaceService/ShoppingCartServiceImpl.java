@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,34 +38,30 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
             shoppingCartRepository.updateShoppingCart(shoppingCart);
             return shoppingCart;
         } else {
-            // Fully populate the products in the shopping cart
+            // insert product to cart with the full product details
             List<Product> fullProductsList = shoppingCart.getProductsList().stream()
                     .map(this::getFullProductDetails)
                     .collect(Collectors.toList());
             shoppingCart.setProductsList(fullProductsList);
-            // Calculate the total amount and update product quantities
+            // calc total amount and update product quantities
             double totalAmount = 0.0;
             for (Product product : shoppingCart.getProductsList()) {
                 totalAmount += product.getPrice() * product.getQuantity();
-                // Fetch the current quantity from the database
                 Product dbProduct = productRepository.getProductByName(product.getProductName());
-                // Check if there's enough quantity available
+                // Check if enough quantity available
                 if (dbProduct.getQuantity() < product.getQuantity()) {
                     throw new RuntimeException("Not enough quantity for product " + product.getProductName());
                 }
-                // Deduct the purchased quantity from the current quantity
+                // Deduct cart quantity from current quantity
                 int newQuantity = dbProduct.getQuantity() - product.getQuantity();
                 dbProduct.setQuantity(newQuantity);
-                // Update the product quantity in the database
+                // update product quantity in the database
                 productRepository.updateProductQuantity(dbProduct);
             }
-
-            // Set the calculated amount and a default state
             shoppingCart.setAmount(totalAmount);
             if (shoppingCart.getState() == null) {
                 shoppingCart.setState(1); // Default to 1 if state is null
             }
-
             shoppingCartRepository.createShoppingCart(shoppingCart);
             return shoppingCart;
         }
@@ -75,11 +70,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     @Override
     public String updateShoppingCart(Integer userId, String username, List<Product> productsList) {
         if (!functionUtil.isUserExists(username)) {
-            return "Error: User does not exist.";
+            return "Error: User does not exist";
         }
         ShoppingCart existingCart = shoppingCartRepository.getShoppingCartByUsername(username);
         if (existingCart == null) {
-            return "Error: Shopping cart does not exist for this user.";
+            return "Error: Shopping cart does not exist for this user";
         }
         // calc new total amount and update product quantities
         double totalAmount = existingCart.getAmount();
@@ -87,7 +82,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         for (Product product : productsList) {
             Product existingProduct = productRepository.getProductByName(product.getProductName());
             if (existingProduct == null) {
-                return "Error: Product " + product.getProductName() + " does not exist.";
+                return "Error: Product " + product.getProductName() + " does not exist";
             }
             // check if in existing cart
             boolean foundInCart = false;
@@ -116,7 +111,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
             if (existingProduct.getQuantity() < product.getQuantity()) {
                 return "Error: Not enough quantity for product " + product.getProductName() + ".";
             }
-//    update new totals
+            //    update new totals
             existingProduct.setQuantity(existingProduct.getQuantity() - product.getQuantity());
             productRepository.updateProductQuantity(existingProduct);
         }
@@ -143,14 +138,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
             int dbShoppingCart = shoppingCartRepository.deleteShoppingCartByUsername(username);
             return dbShoppingCart > 0;
         } else {
-            // user does not exist
+            // user not exist
             System.out.println("user " + username + " does not exist");
             return false;
         }
     }
 
 //    --------------------------------------------- Helper Methods ---------------------------------------------
-// get full product from DB
+// get full product object from DB
     private Product getFullProductDetails(Product product) {
         Product existingProduct = productRepository.getProductByName(product.getProductName());
         if (existingProduct == null) {
