@@ -1,11 +1,9 @@
-package com.ShoppingSite.controller.user;
+package com.ShoppingSite.controller.userController;
 
 import com.ShoppingSite.model.user.CustomUser;
 import com.ShoppingSite.model.user.CustomUserRequest;
-import com.ShoppingSite.service.user.UserService;
+import com.ShoppingSite.service.userService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

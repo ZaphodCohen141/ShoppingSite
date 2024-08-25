@@ -1,10 +1,9 @@
-package com.ShoppingSite.service.userInterfaceService;
+package com.ShoppingSite.service.shopInterfaceService;
 
 import com.ShoppingSite.model.product.Product;
-import com.ShoppingSite.model.userInterface.ShoppingCart;
+import com.ShoppingSite.model.shopInterface.ShoppingCart;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ShoppingCartService {
     public ShoppingCart createShoppingCart(ShoppingCart shoppingCart);

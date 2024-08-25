@@ -1,7 +1,7 @@
-package com.ShoppingSite.repository.userInterfaceRepository.shppingCartMapper;
+package com.ShoppingSite.repository.shopnIterfaceRepository.shopInterfaceMappers;
 
 import com.ShoppingSite.model.product.Product;
-import com.ShoppingSite.model.userInterface.ShoppingCart;
+import com.ShoppingSite.model.shopInterface.ShoppingCart;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

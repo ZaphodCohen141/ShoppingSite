@@ -1,7 +1,7 @@
 package com.ShoppingSite.security;
 
 import com.ShoppingSite.model.user.CustomUser;
-import com.ShoppingSite.service.user.UserService;
+import com.ShoppingSite.service.userService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,10 +1,9 @@
-package com.ShoppingSite.service.userInterfaceService;
+package com.ShoppingSite.service.shopInterfaceService;
 
 import com.ShoppingSite.model.product.Product;
-import com.ShoppingSite.model.user.CustomUser;
-import com.ShoppingSite.model.userInterface.ShoppingCart;
+import com.ShoppingSite.model.shopInterface.ShoppingCart;
 import com.ShoppingSite.repository.productRepository.ProductRepository;
-import com.ShoppingSite.repository.userInterfaceRepository.ShoppingCartRepository;
+import com.ShoppingSite.repository.shopnIterfaceRepository.ShoppingCartRepository;
 import com.ShoppingSite.repository.userRepository.UserRepository;
 import com.ShoppingSite.utils.FunctionUtil;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -43,6 +43,25 @@ CREATE TABLE cart_products (
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
 
+CREATE TABLE orders (
+    order_id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    order_date DATE NOT NULL,
+    shipping_address VARCHAR(255) NOT NULL,
+    total_price DOUBLE NOT NULL,
+    order_status VARCHAR(10) NOT NULL,
+    PRIMARY KEY (order_id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE favorites (
+    user_id INT NOT NULL,
+    product_id INT NOT NULL,
+    PRIMARY KEY (user_id, product_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
 INSERT INTO users (username, firstName, lastName, email, phone, address, password, active, roles , permissions)
 VALUES ('zapbeeb','Zaphod','Beeblebrox','za@b.il','09987','Somewhere forSure','',1,'','');
 

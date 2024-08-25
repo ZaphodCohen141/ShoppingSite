@@ -1,9 +1,8 @@
-package com.ShoppingSite.controller.product;
+package com.ShoppingSite.controller.productController;
 
 import com.ShoppingSite.model.product.Product;
 import com.ShoppingSite.model.product.ProductRequest;
-import com.ShoppingSite.service.product.ProductService;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.ShoppingSite.service.productService.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,13 +10,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/product")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProductController {
-   @Autowired
+    @Autowired
     ProductService productService;
+
     @PostMapping(value = "/private/create")
     public Integer createProduct(@RequestBody ProductRequest productRequest) throws Exception {
         return productService.createProduct(productRequest);
     }
+
     @DeleteMapping(value = "/private/delete")
     public void deleteProductById(@RequestParam Integer id) throws Exception {
         productService.deleteProductById(id);
@@ -25,15 +27,17 @@ public class ProductController {
 
     @GetMapping(value = "/public/getProductByName")
     public Product getProductByName(@RequestParam String productName) {
-        return  productService.getProductByName(productName);
-    }
-    @PostMapping(value = "/private/updateProductByName")
-    public void updateProductByName(@RequestParam String productName, @RequestBody Product product) {
-        productService.updateProductByName(productName,product);
+        return productService.getProductByName(productName);
     }
 
-    @GetMapping("/public/searchProducts")
-    public List<Product> findProducts(String product){
-        return productService.findProducts(product);
+    @PostMapping(value = "/private/updateProductByName")
+    public void updateProductByName(@RequestParam String productName, @RequestBody Product product) {
+        productService.updateProductByName(productName, product);
+    }
+
+    @GetMapping("/public/searchProducts/{productName}")
+    public List<Product> findProducts(@PathVariable("productName") String productName) {
+        return productService.findProducts(productName);
     }
 }
+

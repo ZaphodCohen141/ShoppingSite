@@ -1,7 +1,6 @@
-package com.ShoppingSite.model.userInterface;
+package com.ShoppingSite.model.shopInterface;
 
 
-import com.ShoppingSite.model.product.Product;
 import com.ShoppingSite.model.product.ProductRequest;
 
 import java.util.List;

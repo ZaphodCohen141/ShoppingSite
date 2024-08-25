@@ -1,10 +1,10 @@
-package com.ShoppingSite.controller.userInterfaceController;
+package com.ShoppingSite.controller.shopInterfaceController;
 
 import com.ShoppingSite.model.product.Product;
 import com.ShoppingSite.model.product.ProductRequest;
-import com.ShoppingSite.model.userInterface.ShoppingCart;
-import com.ShoppingSite.model.userInterface.ShoppingCartRequest;
-import com.ShoppingSite.service.userInterfaceService.ShoppingCartService;
+import com.ShoppingSite.model.shopInterface.ShoppingCart;
+import com.ShoppingSite.model.shopInterface.ShoppingCartRequest;
+import com.ShoppingSite.service.shopInterfaceService.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

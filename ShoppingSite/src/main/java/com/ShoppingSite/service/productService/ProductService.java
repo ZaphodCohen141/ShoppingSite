@@ -1,8 +1,7 @@
-package com.ShoppingSite.service.product;
+package com.ShoppingSite.service.productService;
 
 import com.ShoppingSite.model.product.Product;
 import com.ShoppingSite.model.product.ProductRequest;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.List;
 

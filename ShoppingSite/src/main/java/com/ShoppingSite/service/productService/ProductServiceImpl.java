@@ -1,9 +1,8 @@
-package com.ShoppingSite.service.product;
+package com.ShoppingSite.service.productService;
 
 import com.ShoppingSite.model.product.Product;
 import com.ShoppingSite.model.product.ProductRequest;
 import com.ShoppingSite.repository.productRepository.ProductRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

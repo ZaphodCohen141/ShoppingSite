@@ -1,4 +1,4 @@
-package com.ShoppingSite.model.userInterface;
+package com.ShoppingSite.model.shopInterface;
 
 import com.ShoppingSite.model.product.Product;
 import com.fasterxml.jackson.annotation.JsonProperty;

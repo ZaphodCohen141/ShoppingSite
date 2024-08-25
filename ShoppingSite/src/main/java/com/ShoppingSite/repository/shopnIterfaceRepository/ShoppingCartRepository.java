@@ -1,6 +1,6 @@
-package com.ShoppingSite.repository.userInterfaceRepository;
+package com.ShoppingSite.repository.shopnIterfaceRepository;
 
-import com.ShoppingSite.model.userInterface.ShoppingCart;
+import com.ShoppingSite.model.shopInterface.ShoppingCart;
 
 public interface ShoppingCartRepository {
     public Integer createShoppingCart(ShoppingCart shoppingCart);

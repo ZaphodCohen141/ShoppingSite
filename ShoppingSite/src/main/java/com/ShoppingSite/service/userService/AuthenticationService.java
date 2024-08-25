@@ -1,4 +1,4 @@
-package com.ShoppingSite.service.user;
+package com.ShoppingSite.service.userService;
 
 import com.ShoppingSite.security.model.AuthenticationRequest;
 import com.ShoppingSite.security.model.AuthenticationResponse;

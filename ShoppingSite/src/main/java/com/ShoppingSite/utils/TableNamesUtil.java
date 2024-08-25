@@ -5,4 +5,6 @@ public class TableNamesUtil {
     public static final String PRODUCT_TABLE_NAME = "products";
     public static final String CART_PRODUCT_TABLE_NAME = "cart_products";
     public static final String SHOPPING_CART_TABLE_NAME = "shopping_cart";
+    public static final String ORDERS_TABLE_NAME = "orders";
+    public static final String FAVORITES_TABLE_NAME = "favorites";
 }
