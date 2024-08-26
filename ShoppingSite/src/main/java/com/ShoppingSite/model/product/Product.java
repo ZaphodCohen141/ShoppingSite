@@ -13,8 +13,19 @@ public class Product {
     private Double price;
     @JsonProperty("status")
     private Integer status;
+    @JsonProperty("imageUrl")
+    private String imageUrl;
 
     public Product() {
+    }
+
+    public Product(Integer id, String productName, Integer quantity, Double price, Integer status, String imageUrl) {
+        this.id = id;
+        this.productName = productName;
+        this.quantity = quantity;
+        this.price = price;
+        this.status = status;
+        this.imageUrl = imageUrl;
     }
 
     public Product(Integer id, String productName, Integer quantity, Double price) {
@@ -85,6 +96,14 @@ public class Product {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override

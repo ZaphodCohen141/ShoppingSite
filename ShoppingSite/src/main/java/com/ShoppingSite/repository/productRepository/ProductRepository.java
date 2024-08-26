@@ -12,4 +12,7 @@ public interface ProductRepository {
     public Product getProductById (Integer id) throws Exception;
     public List<Product> findProducts (String product);
     public Integer updateProductQuantity(Product product);
+    public List<Product> getAllProducts();
+    public List<Product> getProductsByNumber(int limit);
+    public String updateProductImageUrlByName(String productName, String imageUrl);
 }

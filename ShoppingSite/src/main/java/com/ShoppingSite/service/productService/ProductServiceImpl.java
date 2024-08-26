@@ -3,6 +3,9 @@ package com.ShoppingSite.service.productService;
 import com.ShoppingSite.model.product.Product;
 import com.ShoppingSite.model.product.ProductRequest;
 import com.ShoppingSite.repository.productRepository.ProductRepository;
+import com.ShoppingSite.unsplash.UnsplashService;
+import com.ShoppingSite.unsplash.model.UnsplashResponse;
+import com.ShoppingSite.utils.ApiImageParams;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,8 @@ public class ProductServiceImpl implements ProductService {
     ProductRepository productRepository;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private UnsplashService unsplashService;
 
     @Override
     public Integer createProduct(ProductRequest productRequest) throws Exception {
@@ -71,4 +76,30 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findProducts(product);
     }
 
+    @Override
+    public List<Product> getAllProducts() {
+        return productRepository.getAllProducts();
+    }
+
+    @Override
+    public List<Product> getProductsByNumber(int limit) {
+        return productRepository.getProductsByNumber(limit);
+    }
+    @Override
+    public String updateProductImageUrl(String productName) {
+        UnsplashResponse response = unsplashService.searchPhotos(productName, ApiImageParams.ACCESS_KEY);
+        if (response != null && response.getResults() != null && !response.getResults().isEmpty()) {
+            String fullImageUrl = response.getResults().get(0).getUrls().getRegular();
+            String baseUrl = fullImageUrl.split("\\?")[0];
+            System.out.println(baseUrl.getClass());
+            Product product = productRepository.getProductByName(productName);
+            if (product == null) {
+                return "Product not found";
+            }
+            String updateResult = productRepository.updateProductImageUrlByName(productName, baseUrl);
+            return updateResult;
+        } else {
+            return "No images found";
+        }
+    }
 }

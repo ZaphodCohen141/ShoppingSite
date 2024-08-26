@@ -11,4 +11,7 @@ public interface ProductService {
     public Product getProductByName(String productName);
     public  String updateProductByName(String productName, Product product);
     public List<Product> findProducts (String product);
+    public List<Product> getAllProducts();
+    public List<Product> getProductsByNumber(int limit);
+    public String updateProductImageUrl(String productName);
 }

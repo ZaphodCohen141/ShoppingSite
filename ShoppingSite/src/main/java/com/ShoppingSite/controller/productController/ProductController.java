@@ -4,6 +4,7 @@ import com.ShoppingSite.model.product.Product;
 import com.ShoppingSite.model.product.ProductRequest;
 import com.ShoppingSite.service.productService.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,5 +40,21 @@ public class ProductController {
     public List<Product> findProducts(@PathVariable("productName") String productName) {
         return productService.findProducts(productName);
     }
+    @GetMapping("/public/getAllProducts")
+    public ResponseEntity<List<Product>> getAllProducts() {
+        List<Product> products = productService.getAllProducts();
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/public/getProducts")
+    public ResponseEntity<List<Product>> getProductsWithLim(@RequestParam int limit) {
+        List<Product> products = productService.getProductsByNumber(limit);
+        return ResponseEntity.ok(products);
+    }
+    @GetMapping("/updateProductImageUrl")
+    public String updateProductImageUrl(@RequestParam String productName) {
+        return productService.updateProductImageUrl(productName);
+    }
+
 }
 

@@ -21,6 +21,7 @@ CREATE TABLE products(
     quantity INT NOT NULL,
     price DOUBLE NOT NULL,
     status INT NOT NULL DEFAULT '1',
+    imageUrl VARCHAR(255) NOT NULL DEFAULT '',
     PRIMARY KEY(id)
 );
 
@@ -66,4 +67,25 @@ INSERT INTO users (username, firstName, lastName, email, phone, address, passwor
 VALUES ('zapbeeb','Zaphod','Beeblebrox','za@b.il','09987','Somewhere forSure','',1,'','');
 
 INSERT INTO products (productName, quantity, price)
-VALUES ('TableTop', 12, 300.0),('Velociraptor',50,200.0)
+VALUES
+('TableTop', 12, 300.0),
+('Velociraptor', 50, 200.0),
+('Fangus', 25, 150.0),
+('Magic Rabbit', 8, 75.0),
+('Theremin', 15, 500.0),
+('Monowheel Motorbike', 3, 1200.0),
+('Quantum Spanner', 40, 220.0),
+('Invisibility Cloak', 5, 1000.0),
+('Time Turner', 10, 800.0),
+('Anti-Gravity Boots', 20, 350.0),
+('Spherical Vacuum Trap ', 2, 2500.0),
+('Hoverboard', 30, 450.0),
+('Mind Reading Helmet', 12, 600.0),
+('Eldritch Tome', 4, 900.0),
+('Stubby Nail Eater', 60, 20.0),
+('Pocket Dimension', 1, 15000.0),
+('Transmogrifier Ray', 7, 950.0),
+('Portable Wormhole', 3, 2000.0),
+('Meteorite Fragment', 18, 700.0),
+('Robot Butler', 2, 5000.0);
+

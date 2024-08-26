@@ -13,3 +13,5 @@ spring:
     console:
       enabled: true
 
+unsplash:
+  url: "https://api.unsplash.com/"

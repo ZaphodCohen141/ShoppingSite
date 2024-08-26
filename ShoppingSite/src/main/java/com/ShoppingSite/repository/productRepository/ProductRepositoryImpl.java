@@ -50,14 +50,14 @@ public class ProductRepositoryImpl implements ProductRepository {
     public Product getProductByName(String productName) {
         String sql = "SELECT * FROM " +
                 TableNamesUtil.PRODUCT_TABLE_NAME +
-                " WHERE productName = ?";
+                " WHERE LOWER(productName) = LOWER(?)";
         try {
-            Product product = jdbcTemplate.queryForObject(sql, new ProductMapper(),productName);
-            return product;
-        }catch (EmptyResultDataAccessException e) {
+            return jdbcTemplate.queryForObject(sql, new ProductMapper(), productName.toLowerCase());
+        } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
+
 
     @Override
     public String updateProductByName(String productName, Product product) {
@@ -98,4 +98,28 @@ public class ProductRepositoryImpl implements ProductRepository {
                 " SET quantity = ? WHERE id = ?";
         return jdbcTemplate.update(sql, product.getQuantity(), product.getId());
     }
+    @Override
+    public List<Product> getAllProducts() {
+        String sql = "SELECT * FROM products";
+        return jdbcTemplate.query(sql, new ProductMapper());
+    }
+
+    @Override
+    public List<Product> getProductsByNumber(int limit) {
+        String sql = "SELECT * FROM products LIMIT ?";
+        return jdbcTemplate.query(sql, new ProductMapper(), limit);
+    }
+    @Override
+    public String updateProductImageUrlByName(String productName, String imageUrl) {
+        String sql = "UPDATE " + TableNamesUtil.PRODUCT_TABLE_NAME +
+                " SET imageUrl = ? WHERE LOWER(productName) = LOWER(?);";
+        System.out.println(imageUrl);
+        int update = jdbcTemplate.update(sql, imageUrl, productName);
+        if (update == 1) {
+            return "Product " + productName + " updated with image";
+        } else {
+            return "Product image update failed";
+        }
+    }
+
 }

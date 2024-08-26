@@ -107,28 +107,28 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>3.0.5.RELEASE</version>
 		</dependency>
-		 https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt</artifactId>
-			<version>0.9.1</version>
-		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-->
+       <dependency>
+           <groupId>io.jsonwebtoken</groupId>
+           <artifactId>jjwt</artifactId>
+           <version>0.9.1</version>
+       </dependency>
 
-		<dependency>
-			<groupId>jakarta.servlet</groupId>
-			<artifactId>jakarta.servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
+       <dependency>
+           <groupId>jakarta.servlet</groupId>
+           <artifactId>jakarta.servlet-api</artifactId>
+           <scope>provided</scope>
+       </dependency>
 
-	</dependencies>
+   </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+   <build>
+       <plugins>
+           <plugin>
+               <groupId>org.springframework.boot</groupId>
+               <artifactId>spring-boot-maven-plugin</artifactId>
+           </plugin>
+       </plugins>
+   </build>
 
 </project>
