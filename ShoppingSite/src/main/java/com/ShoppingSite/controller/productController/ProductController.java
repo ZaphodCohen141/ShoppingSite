@@ -30,7 +30,15 @@ public class ProductController {
     public Product getProductByName(@RequestParam String productName) {
         return productService.getProductByName(productName);
     }
-
+    @GetMapping("/public/getProductById")
+    public ResponseEntity<Product> getProductById(@RequestParam("id") Integer id) throws Exception {
+        Product product = productService.getProductById(id);
+        if (product != null) {
+            return ResponseEntity.ok(product);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
     @PostMapping(value = "/private/updateProductByName")
     public void updateProductByName(@RequestParam String productName, @RequestBody Product product) {
         productService.updateProductByName(productName, product);

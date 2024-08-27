@@ -9,6 +9,7 @@ public interface ProductService {
     public Integer createProduct(ProductRequest productRequest) throws Exception;
     public void deleteProductById(Integer id) throws Exception;
     public Product getProductByName(String productName);
+    Product getProductById(Integer id) throws Exception;
     public  String updateProductByName(String productName, Product product);
     public List<Product> findProducts (String product);
     public List<Product> getAllProducts();

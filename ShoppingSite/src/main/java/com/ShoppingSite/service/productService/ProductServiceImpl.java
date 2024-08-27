@@ -6,6 +6,7 @@ import com.ShoppingSite.repository.productRepository.ProductRepository;
 import com.ShoppingSite.unsplash.UnsplashService;
 import com.ShoppingSite.unsplash.model.UnsplashResponse;
 import com.ShoppingSite.utils.ApiImageParams;
+import com.ShoppingSite.utils.FunctionUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,8 @@ public class ProductServiceImpl implements ProductService {
     private ObjectMapper objectMapper;
     @Autowired
     private UnsplashService unsplashService;
+    @Autowired
+    private FunctionUtil functionUtil;
 
     @Override
     public Integer createProduct(ProductRequest productRequest) throws Exception {
@@ -58,7 +61,16 @@ public class ProductServiceImpl implements ProductService {
             return null;
         }
     }
+    @Override
+    public Product getProductById(Integer id) throws Exception {
+        Product product = productRepository.getProductById(id);
+        if (product != null && (product.getImageUrl() == null || product.getImageUrl().isEmpty())) {
+            updateProductImageUrl(product.getProductName());
+            product = productRepository.getProductById(id);
+        }
 
+        return product;
+    }
     @Override
     public String updateProductByName(String productName, Product product) {
         //        if exists - update the product. if not - sout to create new product
@@ -87,19 +99,8 @@ public class ProductServiceImpl implements ProductService {
     }
     @Override
     public String updateProductImageUrl(String productName) {
-        UnsplashResponse response = unsplashService.searchPhotos(productName, ApiImageParams.ACCESS_KEY);
-        if (response != null && response.getResults() != null && !response.getResults().isEmpty()) {
-            String fullImageUrl = response.getResults().get(0).getUrls().getRegular();
-            String baseUrl = fullImageUrl.split("\\?")[0];
-            System.out.println(baseUrl.getClass());
-            Product product = productRepository.getProductByName(productName);
-            if (product == null) {
-                return "Product not found";
-            }
-            String updateResult = productRepository.updateProductImageUrlByName(productName, baseUrl);
-            return updateResult;
-        } else {
-            return "No images found";
-        }
+        String imageUrl = functionUtil.getImageForProduct(productName);
+        return productRepository.updateProductImageUrlByName(productName, imageUrl);
     }
+
 }
