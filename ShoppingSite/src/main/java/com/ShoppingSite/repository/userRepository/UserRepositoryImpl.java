@@ -77,4 +77,11 @@ public class UserRepositoryImpl implements UserRepository {
             return null;
         }
     }
+
+    @Override
+    public boolean checkUserExists(String username) {
+        String sql = "SELECT COUNT(*) FROM " + TableNamesUtil.USER_TABLE_NAME + " WHERE LOWER(username) LIKE LOWER(?)";
+        Integer count = jdbcTemplate.queryForObject(sql, new Object[]{username}, Integer.class);
+        return count != null && count > 0;
+    }
 }

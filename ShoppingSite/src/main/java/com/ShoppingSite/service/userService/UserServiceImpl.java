@@ -63,4 +63,8 @@ public class UserServiceImpl implements UserService {
     public CustomUser findUserByUsername(String username) {
         return userRepository.findUserByUsername(username);
     }
+    @Override
+    public boolean checkUserExists(String username) {
+        return userRepository.checkUserExists(username);
+    }
 }
