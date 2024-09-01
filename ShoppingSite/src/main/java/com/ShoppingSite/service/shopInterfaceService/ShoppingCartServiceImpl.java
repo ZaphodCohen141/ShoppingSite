@@ -139,13 +139,17 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public Boolean deleteShoppingCartByUsername(String username) {
-        if (functionUtil.isUserExists(username)) {
-            int dbShoppingCart = shoppingCartRepository.deleteShoppingCartByUsername(username);
-            return dbShoppingCart > 0;
-        } else {
-            System.out.println("User " + username + " does not exist");
+        List<Integer> cartIds = shoppingCartRepository.getCartIdsByUsername(username);
+        if (cartIds.isEmpty()) {
+            System.out.println("No carts found for user " + username);
             return false;
         }
+
+        for (Integer cartId : cartIds) {
+            shoppingCartRepository.deleteShoppingCartById(cartId);
+        }
+
+        return true;
     }
 
     public boolean checkIfCartExist(String username) {

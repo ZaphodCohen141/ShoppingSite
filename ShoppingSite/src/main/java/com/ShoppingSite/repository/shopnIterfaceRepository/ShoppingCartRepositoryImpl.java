@@ -126,4 +126,18 @@ private JdbcTemplate jdbcTemplate;
             return null;
         }
     }
+
+    @Override
+    public List<Integer> getCartIdsByUsername(String username) {
+        String sql = "SELECT cart_id FROM " + TableNamesUtil.SHOPPING_CART_TABLE_NAME +
+                " WHERE LOWER(username) = LOWER(?)";
+        return jdbcTemplate.queryForList(sql, new Object[]{username}, Integer.class);
+    }
+
+    @Override
+    public int deleteShoppingCartById(Integer cartId) {
+        String deleteCartSql = "DELETE FROM " + TableNamesUtil.SHOPPING_CART_TABLE_NAME + " WHERE cart_id = ?";
+        return jdbcTemplate.update(deleteCartSql, cartId);
+    }
+
 }

@@ -51,7 +51,7 @@ public class UserController {
     @GetMapping("/checkUserExists")
     public ResponseEntity<Boolean> checkUserExists(@RequestParam String username) {
         boolean exists = userService.checkUserExists(username);
-        System.out.println("User exists: " + exists);
+        System.out.println("User exists " + exists);
         return ResponseEntity.ok(exists);
     }
     @PostMapping("/login")

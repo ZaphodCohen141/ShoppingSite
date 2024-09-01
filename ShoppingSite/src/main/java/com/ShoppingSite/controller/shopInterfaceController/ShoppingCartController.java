@@ -59,7 +59,7 @@ public class ShoppingCartController {
         if (deleted) {
             return ResponseEntity.ok().build();
         } else {
-            return ResponseEntity.notFound().build(); // if user does not exist
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -82,7 +82,7 @@ public class ShoppingCartController {
             String result = shoppingCartService.addProductToCart(username, productId);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error adding product to cart: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error adding " + e.getMessage());
         }
     }
 
