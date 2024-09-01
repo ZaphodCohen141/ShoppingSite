@@ -10,8 +10,6 @@ public class ShoppingCartRequest {
     private String username;
     private List<ProductRequest> productsList;
 
-    // Getters and Setters
-
     public Integer getUserId() {
         return userId;
     }

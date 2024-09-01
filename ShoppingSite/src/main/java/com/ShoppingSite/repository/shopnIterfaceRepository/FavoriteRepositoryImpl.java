@@ -28,4 +28,8 @@ public class FavoriteRepositoryImpl implements FavoriteRepository{
         System.out.println(userId);
         return jdbcTemplate.query(sql, new ProductMapper(), userId);
     }
+    public void deleteFavoriteOfUser(Integer userId){
+        String sql = "DELETE FROM " + TableNamesUtil.FAVORITES_TABLE_NAME + " WHERE user_id = ?";
+        jdbcTemplate.update(sql, userId);
+    }
 }

@@ -30,4 +30,7 @@ public class FavoriteServiceImpl implements FavoriteService{
     public List<Product> getFavoriteProducts(Integer userId) {
         return favoriteRepository.getFavoriteProductsByUserId(userId);
     }
+    public void deleteFavoriteOfUser(Integer userId){
+        favoriteRepository.deleteFavoriteOfUser(userId);
+    }
 }

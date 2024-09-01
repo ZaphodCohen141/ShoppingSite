@@ -103,4 +103,10 @@ public class UserRepositoryImpl implements UserRepository {
                 " SET active = 0 WHERE LOWER(username) = LOWER(?)";
         jdbcTemplate.update(sql,username);
     }
+
+    @Override
+    public Integer getUserIdByUsername(String username) {
+        String sql = "SELECT id FROM " + TableNamesUtil.USER_TABLE_NAME + " WHERE LOWER(username) = LOWER(?)";
+        return jdbcTemplate.queryForObject(sql, new Object[]{username}, Integer.class);
+    }
 }

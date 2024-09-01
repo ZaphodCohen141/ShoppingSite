@@ -4,11 +4,14 @@ import com.ShoppingSite.model.product.Product;
 import com.ShoppingSite.model.product.ProductRequest;
 import com.ShoppingSite.model.shopInterface.ShoppingCart;
 import com.ShoppingSite.model.shopInterface.ShoppingCartRequest;
+import com.ShoppingSite.repository.userRepository.UserRepository;
 import com.ShoppingSite.service.shopInterfaceService.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,10 +21,12 @@ import java.util.stream.Collectors;
 public class ShoppingCartController {
     @Autowired
     ShoppingCartService shoppingCartService;
+    @Autowired
+    UserRepository userRepository;
 
 
     @PostMapping("/create")
-    public ResponseEntity<ShoppingCart> createCart(@RequestBody ShoppingCartRequest request) {
+    public ResponseEntity<ShoppingCart> createCart(@RequestBody ShoppingCartRequest request) throws Exception {
         List<Product> productsList = request.getProductsList().stream()
                 .map(ProductRequest::toProduct)
                 .collect(Collectors.toList());
@@ -59,7 +64,7 @@ public class ShoppingCartController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<String> updateCart(@RequestBody ShoppingCartRequest request) {
+    public ResponseEntity<String> updateCart(@RequestBody ShoppingCartRequest request) throws Exception {
         List<Product> productsList = request.getProductsList().stream()
                 .map(ProductRequest::toProduct)
                 .collect(Collectors.toList());
@@ -70,4 +75,15 @@ public class ShoppingCartController {
             return ResponseEntity.badRequest().body(result);
         }
     }
+    @PostMapping("/add")
+    public ResponseEntity<String> addProductToCart(@RequestParam String username,
+                                                   @RequestParam Integer productId) {
+        try {
+            String result = shoppingCartService.addProductToCart(username, productId);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error adding product to cart: " + e.getMessage());
+        }
+    }
+
 }

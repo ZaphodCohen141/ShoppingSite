@@ -3,6 +3,9 @@ package com.ShoppingSite.service.userService;
 import com.ShoppingSite.model.user.CustomUser;
 import com.ShoppingSite.model.user.CustomUserRequest;
 import com.ShoppingSite.repository.userRepository.UserRepository;
+import com.ShoppingSite.service.shopInterfaceService.FavoriteService;
+import com.ShoppingSite.service.shopInterfaceService.OrderService;
+import com.ShoppingSite.service.shopInterfaceService.ShoppingCartService;
 import com.ShoppingSite.utils.FunctionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +14,12 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    ShoppingCartService shoppingCartService;
+    @Autowired
+    OrderService orderService;
+    @Autowired
+    FavoriteService favoriteService;
     @Autowired
     FunctionUtil functionUtil;
     @Override
@@ -35,12 +44,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserByUsername(String username) {
-//        checks if product exists.
-//        if exists - delete the product (!! need to be deleted also from userShoppingCart !!)
        CustomUser customUser = userRepository.getUserByUsername(username);
         if (customUser != null){
+            shoppingCartService.deleteShoppingCartByUsername(username);
+            orderService.deleteOrderById(customUser.getId());
+            favoriteService.deleteFavoriteOfUser(customUser.getId());
             userRepository.deleteUserByUsername(username);
-//      !! ADD LATER - DELETE USER FROM SHOPPING CART + PERMISSIONS + OTHER COMPONENTS !!
             System.out.println("user was deleted");
 
         }else {

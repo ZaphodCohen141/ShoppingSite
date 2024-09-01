@@ -8,4 +8,5 @@ public interface FavoriteRepository {
     public Integer addFavorite(Integer userId, Integer productId);
     public Integer removeFavorite(Integer userId, Integer productId);
     public List<Product> getFavoriteProductsByUserId(Integer userId);
+    public void deleteFavoriteOfUser(Integer userId);
 }

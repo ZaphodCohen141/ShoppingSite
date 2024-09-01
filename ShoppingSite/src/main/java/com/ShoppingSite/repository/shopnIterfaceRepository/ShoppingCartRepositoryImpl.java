@@ -7,6 +7,7 @@ import com.ShoppingSite.repository.shopnIterfaceRepository.shopInterfaceMappers.
 import com.ShoppingSite.utils.FunctionUtil;
 import com.ShoppingSite.utils.TableNamesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @Repository
 public class ShoppingCartRepositoryImpl implements ShoppingCartRepository {
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+private JdbcTemplate jdbcTemplate;
     @Autowired
     ProductRepository productRepository;
     @Autowired
@@ -28,7 +29,6 @@ public class ShoppingCartRepositoryImpl implements ShoppingCartRepository {
                 shoppingCart.getState());
         String getIdSql = "SELECT MAX(cart_id) FROM " + TableNamesUtil.SHOPPING_CART_TABLE_NAME;
         Integer cartId = jdbcTemplate.queryForObject(getIdSql, Integer.class);
-        // Insert products into cart_products
         if (cartId != null && shoppingCart.getProductsList() != null) {
             for (Product product : shoppingCart.getProductsList()) {
                 String productSql = "INSERT INTO " + TableNamesUtil.CART_PRODUCT_TABLE_NAME +
@@ -37,32 +37,32 @@ public class ShoppingCartRepositoryImpl implements ShoppingCartRepository {
                         product.getStatus());
             }
         }
-        return 1;
+        return cartId;
     }
 
     @Override
-    public Integer updateShoppingCart(ShoppingCart shoppingCart) {
+    public Integer updateShoppingCart(ShoppingCart shoppingCart) throws Exception {
         String sql = "UPDATE " + TableNamesUtil.SHOPPING_CART_TABLE_NAME +
                 " SET amount = ?, state = ? WHERE cart_id = ?";
-        int rowsAffected = jdbcTemplate.update(sql, shoppingCart.getAmount(), shoppingCart.getState(), shoppingCart.getCartId());
+        int changes = jdbcTemplate.update(sql, shoppingCart.getAmount(), shoppingCart.getState(),
+                shoppingCart.getCartId());
 
-        // Optionally update products in the cart_products table
-        // First, delete existing products in the cart
         String deleteProductsSql = "DELETE FROM " + TableNamesUtil.CART_PRODUCT_TABLE_NAME + " WHERE cart_id = ?";
         jdbcTemplate.update(deleteProductsSql, shoppingCart.getCartId());
 
-        // Insert the updated products into cart_products
         if (shoppingCart.getProductsList() != null) {
             for (Product product : shoppingCart.getProductsList()) {
                 String insertProductSql = "INSERT INTO " + TableNamesUtil.CART_PRODUCT_TABLE_NAME +
                         " (cart_id, product_id, quantity, price, status) VALUES (?, ?, ?, ?, ?)";
-                Product dbProduct = productRepository.getProductByName(product.getProductName());
-                jdbcTemplate.update(insertProductSql, shoppingCart.getCartId(), dbProduct.getId(), product.getQuantity(), dbProduct.getPrice(), dbProduct.getStatus());
+                Product dbProduct = productRepository.getProductById(product.getId());
+                jdbcTemplate.update(insertProductSql, shoppingCart.getCartId(), dbProduct.getId(),
+                        product.getQuantity(), dbProduct.getPrice(), dbProduct.getStatus());
             }
         }
 
-        return rowsAffected;
+        return changes;
     }
+
 
     @Override
     public ShoppingCart getShoppingCartByUsername(String username) {
@@ -76,6 +76,19 @@ public class ShoppingCartRepositoryImpl implements ShoppingCartRepository {
         List<ShoppingCart> carts = jdbcTemplate.query(sql, new Object[]{username}, new ShoppingCartMapper());
         return carts.isEmpty() ? null : carts.get(0);
     }
+    public void addProductToCart(Integer cartId, Integer productId, Integer quantity, Double price, Integer status) {
+        String sql = "INSERT INTO " + TableNamesUtil.CART_PRODUCT_TABLE_NAME +
+                " (cart_id, product_id, quantity, price, status) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, cartId, productId, quantity, price, status);
+    }
+    @Override
+    public int updateProductInCart(Integer cartId, Integer productId, int quantity) {
+        String sql = "UPDATE " + TableNamesUtil.CART_PRODUCT_TABLE_NAME +
+                " SET quantity = ? " +
+                "WHERE cart_id = ? AND product_id = ?";
+        return jdbcTemplate.update(sql, quantity, cartId, productId);
+    }
+
 
     @Override
     public Integer deleteShoppingCartByUsername(String username) {
@@ -88,6 +101,29 @@ public class ShoppingCartRepositoryImpl implements ShoppingCartRepository {
             return jdbcTemplate.update(deleteCartSql, cartId);
         } else {
             return 0;
+        }
+    }
+
+    @Override
+    public boolean checkIfCartExist(String username) {
+        String sql = "SELECT COUNT(*) FROM " +
+                TableNamesUtil.SHOPPING_CART_TABLE_NAME +
+                " WHERE LOWER(username) = LOWER(?)";
+        try {
+            Integer count = jdbcTemplate.queryForObject(sql, Integer.class, username);
+            return count != null && count > 0;
+        } catch (EmptyResultDataAccessException e) {
+            return false; // if no cart exist return false
+        }
+    }
+    @Override
+    public Integer getCartIdByUsername(String username) {
+        String sql = "SELECT cart_id FROM " + TableNamesUtil.SHOPPING_CART_TABLE_NAME +
+                " WHERE LOWER(username) = LOWER(?)";
+        try {
+            return jdbcTemplate.queryForObject(sql, new Object[]{username}, Integer.class);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         }
     }
 }

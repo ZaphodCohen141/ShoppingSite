@@ -29,8 +29,8 @@ CREATE TABLE shopping_cart (
     cart_id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(255) NOT NULL,
     user_id INT NOT NULL,
-    amount DOUBLE NOT NULL,
-    state INT NOT NULL DEFAULT '1'
+    amount DOUBLE,
+    state INT DEFAULT '1'
 );
 
 CREATE TABLE cart_products (

@@ -12,4 +12,5 @@ public interface UserRepository {
     public Integer checkUserActiveStatusByUsername(String username);
     public void loginUser(String username);
     public void logoutUser(String username);
+    public Integer getUserIdByUsername(String username);
 }
