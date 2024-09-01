@@ -113,7 +113,6 @@ public class ProductRepositoryImpl implements ProductRepository {
     public String updateProductImageUrlByName(String productName, String imageUrl) {
         String sql = "UPDATE " + TableNamesUtil.PRODUCT_TABLE_NAME +
                 " SET imageUrl = ? WHERE LOWER(productName) = LOWER(?);";
-        System.out.println(imageUrl);
         int update = jdbcTemplate.update(sql, imageUrl, productName);
         if (update == 1) {
             return "Product " + productName + " updated with image";

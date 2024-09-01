@@ -23,8 +23,6 @@ public class UserRepositoryImpl implements UserRepository {
         String sql = "INSERT INTO " + TableNamesUtil.USER_TABLE_NAME + " (username, firstName, lastName, " +
                 "email, phone, address, password, active, roles , permissions) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        System.out.println(sql);
-        System.out.println("Inserting user: " + customUser.toString());
         jdbcTemplate.update(sql,customUser.getUsername(),customUser.getFirstName(), customUser.getLastName(),
                     customUser.getEmail(),customUser.getPhone(),customUser.getAddress(),customUser.getPassword(),
                     customUser.getActive(),customUser.getRoles(),customUser.getPermissions());
@@ -49,7 +47,6 @@ public class UserRepositoryImpl implements UserRepository {
         String sql = "DELETE FROM " +
                 TableNamesUtil.USER_TABLE_NAME +
                 " WHERE username = ?";
-        System.out.println(username);
         jdbcTemplate.update(sql,username);
     }
 
@@ -59,7 +56,6 @@ public class UserRepositoryImpl implements UserRepository {
                 TableNamesUtil.USER_TABLE_NAME +
                 functionUtil.generateSqlSetString(customUser) +
                 " WHERE username = ?";
-        System.out.println(sql);
         Integer update = jdbcTemplate.update(sql,username);
         if (update == 1){
             return ("user " + username + " was updated");
@@ -80,8 +76,31 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public boolean checkUserExists(String username) {
-        String sql = "SELECT COUNT(*) FROM " + TableNamesUtil.USER_TABLE_NAME + " WHERE LOWER(username) LIKE LOWER(?)";
+        String sql = "SELECT COUNT(*) FROM " + TableNamesUtil.USER_TABLE_NAME +
+                " WHERE LOWER(username) LIKE LOWER(?)";
         Integer count = jdbcTemplate.queryForObject(sql, new Object[]{username}, Integer.class);
         return count != null && count > 0;
+    }
+
+    @Override
+    public Integer checkUserActiveStatusByUsername(String username) {
+        String sql = "SELECT active FROM " + TableNamesUtil.USER_TABLE_NAME +
+                " WHERE LOWER(username) = LOWER(?)";
+        try {
+            return jdbcTemplate.queryForObject(sql, new Object[]{username}, Integer.class);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+    public void loginUser(String username){
+        String sql = "UPDATE " + TableNamesUtil.USER_TABLE_NAME +
+                " SET active = 1 WHERE LOWER(username) = LOWER(?)";
+        jdbcTemplate.update(sql,username);
+    }
+    @Override
+    public void logoutUser(String username) {
+        String sql = "UPDATE " + TableNamesUtil.USER_TABLE_NAME +
+                " SET active = 0 WHERE LOWER(username) = LOWER(?)";
+        jdbcTemplate.update(sql,username);
     }
 }

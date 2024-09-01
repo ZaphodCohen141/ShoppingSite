@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/favorites")
+@CrossOrigin
 public class FavoriteController {
     @Autowired
     FavoriteService favoriteService;

@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/public/shopping_cart")
+@CrossOrigin
 public class ShoppingCartController {
     @Autowired
     ShoppingCartService shoppingCartService;

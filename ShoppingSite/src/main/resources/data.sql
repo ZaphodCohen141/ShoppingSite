@@ -64,7 +64,7 @@ CREATE TABLE favorites (
 );
 
 INSERT INTO users (username, firstName, lastName, email, phone, address, password, active, roles , permissions)
-VALUES ('zapbeeb','Zaphod','Beeblebrox','za@b.il','09987','Somewhere forSure','',1,'','');
+VALUES ('wolfi','Zaphod','Beeblebrox','za@b.il','09987','Somewhere forSure','ASD123',1,'','');
 
 INSERT INTO products (productName, quantity, price)
 VALUES

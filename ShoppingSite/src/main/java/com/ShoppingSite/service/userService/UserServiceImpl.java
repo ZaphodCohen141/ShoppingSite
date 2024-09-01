@@ -67,4 +67,16 @@ public class UserServiceImpl implements UserService {
     public boolean checkUserExists(String username) {
         return userRepository.checkUserExists(username);
     }
+    public Integer checkUserActiveStatusByUsername(String username){
+        return userRepository.checkUserActiveStatusByUsername(username);
+    }
+
+    @Override
+    public void loginUser(String username) {
+        userRepository.loginUser(username);
+    }
+
+    public void logoutUser(String username){
+        userRepository.logoutUser(username);
+    }
 }

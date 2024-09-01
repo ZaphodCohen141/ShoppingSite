@@ -58,9 +58,20 @@ public class UserController {
     public ResponseEntity<?> loginUser(@RequestBody CustomUserRequest loginRequest) {
         CustomUser user = userService.getUserByUsername(loginRequest.getUsername());
         if (user != null && user.getPassword().equals(loginRequest.getPassword())) {
+            userService.loginUser(user.getUsername());
             return ResponseEntity.ok(user);
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid credentials");
         }
+    }
+
+    @GetMapping("/user_status/{username}")
+    public Integer getUserActiveStatus(@PathVariable String username) {
+        return userService.checkUserActiveStatusByUsername(username);
+    }
+
+    @PostMapping("/logout/{username}")
+    public void logoutUser(@PathVariable String username) {
+        userService.logoutUser(username);
     }
 }

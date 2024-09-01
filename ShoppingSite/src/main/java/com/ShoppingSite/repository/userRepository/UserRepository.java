@@ -9,4 +9,7 @@ public interface UserRepository {
     public String updateUserByUsername (String username, CustomUser customUser);
     public CustomUser findUserByUsername(String username);
     public boolean checkUserExists(String username);
+    public Integer checkUserActiveStatusByUsername(String username);
+    public void loginUser(String username);
+    public void logoutUser(String username);
 }
