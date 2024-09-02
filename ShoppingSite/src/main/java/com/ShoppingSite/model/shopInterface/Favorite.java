@@ -1,8 +1,11 @@
 package com.ShoppingSite.model.shopInterface;
 
-public class Favorite {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+public class Favorite {
+    @JsonProperty("userId")
     private Integer userId;
+    @JsonProperty("productId")
     private Integer productId;
 
     public Favorite() {

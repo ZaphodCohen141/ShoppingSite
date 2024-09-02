@@ -25,7 +25,6 @@ public class FavoriteRepositoryImpl implements FavoriteRepository{
         String sql = "SELECT p.* FROM " + TableNamesUtil.PRODUCT_TABLE_NAME + " p " +
                 "JOIN " + TableNamesUtil.FAVORITES_TABLE_NAME + " f ON p.id = f.product_id " +
                 "WHERE f.user_id = ?";
-        System.out.println(userId);
         return jdbcTemplate.query(sql, new ProductMapper(), userId);
     }
     public void deleteFavoriteOfUser(Integer userId){

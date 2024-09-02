@@ -49,44 +49,59 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
     @Override
     public String addProductToCart(String username, Integer productId) throws Exception {
+        // get product from repository
         Product product = productRepository.getProductById(productId);
         if (product == null) {
             throw new RuntimeException("Product with ID " + productId + " does not exist.");
         }
+        // Check if there is enough stock
+        if (product.getQuantity() <= 0) {
+            throw new RuntimeException("Product with ID " + productId + " is out of stock.");
+        }
 
+        // Get user ID from the username
         Integer userId = userRepository.getUserIdByUsername(username);
         if (userId == null) {
             throw new RuntimeException("User ID not found for username: " + username);
         }
+
+        // check if cart exist if not create
         ShoppingCart shoppingCart = shoppingCartRepository.getShoppingCartByUsername(username);
         if (shoppingCart == null) {
-            // Create a new shopping cart if one does not exist
+            // Create a new shopping cart if not exist
             shoppingCart = new ShoppingCart();
             shoppingCart.setUsername(username);
             shoppingCart.setUserId(userId);
             shoppingCart.setProductsList(new ArrayList<>());
             shoppingCart.setAmount(0.0);
-            shoppingCart.setState(1);  // Default state to '1'
+            shoppingCart.setState(1);
         }
+        // Add or update product in cart
         boolean productExistsInCart = false;
         for (Product cartProduct : shoppingCart.getProductsList()) {
             if (cartProduct.getId().equals(product.getId())) {
-                // If the product already exists in the cart, update the quantity
+                // If product already exists in cart, update quantity in the cart
                 cartProduct.setQuantity(cartProduct.getQuantity() + 1);
                 productExistsInCart = true;
                 break;
             }
         }
         if (!productExistsInCart) {
-            // Add product to the cart if it doesn't already exist
-            product.setQuantity(1); // Default to 1 if adding for the first time
-            shoppingCart.getProductsList().add(product);
+            Product productToAdd = new Product();
+            productToAdd.setId(product.getId());
+            productToAdd.setProductName(product.getProductName());
+            productToAdd.setPrice(product.getPrice());
+            productToAdd.setQuantity(1); // Set quantity in cart to 1
+            productToAdd.setStatus(product.getStatus());
+            productToAdd.setImageUrl(product.getImageUrl());
+            shoppingCart.getProductsList().add(productToAdd);
         }
-
-        // Update total amount
+        // update total amount to pay
         shoppingCart.setAmount(shoppingCart.getAmount() + product.getPrice());
-
-        // Save or update the shopping cart in the repository
+        // deduct quantity from products stock
+        product.setQuantity(product.getQuantity() - 1);
+        productRepository.updateProductQuantity(product);
+        // save or update the shopping cart in the repository
         if (shoppingCart.getCartId() == null) {
             shoppingCartRepository.createShoppingCart(shoppingCart);
             return "Shopping cart created and product added successfully.";

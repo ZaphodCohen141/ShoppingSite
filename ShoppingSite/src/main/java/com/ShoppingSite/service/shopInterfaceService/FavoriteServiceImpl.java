@@ -15,16 +15,16 @@ public class FavoriteServiceImpl implements FavoriteService{
         List<Product> favorites = favoriteRepository.getFavoriteProductsByUserId(userId);
         for (Product product : favorites) {
             if (product.getId().equals(productId)) {
-                return "Product is already in the favorite list.";
+                return "Product is already in favorite list";
             }
         }
         favoriteRepository.addFavorite(userId, productId);
-        return "Product added to the favorite list.";
+        return "Product added to favorite list";
     }
 
     public String removeFavorite(Integer userId, Integer productId) {
         favoriteRepository.removeFavorite(userId, productId);
-        return "Product removed from the favorite list.";
+        return "Product removed from favorite list";
     }
 
     public List<Product> getFavoriteProducts(Integer userId) {
